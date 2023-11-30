@@ -3,47 +3,49 @@ const guessNumber = document.querySelector('.number');
 const checkBtn = document.querySelector('.check');
 const messageDisplay = document.querySelector('.message');
 const inputGuess = document.querySelector('.guess');
-const scoreDisplay = document.querySelector('.score');
+const scrDisplay = document.querySelector('.score');
 const body = document.querySelector('body');
 const againBtn = document.querySelector('.again');
 const highscoreDisplay = document.querySelector('.highscore');
 let scoreValue = 20;
 let highscore = 0;
 
+function displayMessage(message) {
+  return (messageDisplay.textContent = message);
+}
+
+function scoreDisplay(value) {
+  return (scrDisplay.textContent = value);
+}
+
+function guessNumDisplay(message) {
+  return (guessNumber.textContent = message);
+}
+
 checkBtn.addEventListener('click', () => {
   const guess = Number(inputGuess.value);
 
   if (!guess) {
-    messageDisplay.textContent = 'Sem número!';
+    displayMessage('Sem número!');
   } else if (guess === secretNumber) {
-    messageDisplay.textContent = 'Número Correto!';
+    displayMessage('Número Correto!');
     body.style.backgroundColor = '#60b347';
-    guessNumber.textContent = secretNumber;
+    guessNumDisplay(secretNumber);
     guessNumber.style.width = '30rem';
 
     if (scoreValue > highscore) {
       highscore = scoreValue;
       highscoreDisplay.textContent = highscore;
     }
-  } else if (guess > secretNumber) {
+  } else if (guess !== secretNumber) {
     inputGuess.value = '';
     if (scoreValue > 1) {
-      messageDisplay.textContent = 'Muito alto!';
+      displayMessage(guess > secretNumber ? 'Muito alto!' : 'Muito baixo!');
       scoreValue--;
-      scoreDisplay.textContent = scoreValue;
+      scoreDisplay(scoreValue);
     } else {
-      messageDisplay.textContent = 'Você perdeu!';
-      scoreDisplay.textContent = 0;
-    }
-  } else if (guess < secretNumber) {
-    inputGuess.value = '';
-    if (scoreValue > 1) {
-      messageDisplay.textContent = 'Muito baixo!';
-      scoreValue--;
-      scoreDisplay.textContent = scoreValue;
-    } else {
-      messageDisplay.textContent = 'Você perdeu!';
-      scoreDisplay.textContent = 0;
+      displayMessage('Você perdeu!');
+      scoreDisplay(0);
     }
   }
 });
@@ -51,10 +53,10 @@ checkBtn.addEventListener('click', () => {
 againBtn.addEventListener('click', () => {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
   scoreValue = 20;
-  messageDisplay.textContent = 'Adivinhe...';
+  displayMessage('Adivinhe...');
   body.style.backgroundColor = '#222';
-  guessNumber.textContent = '?';
+  guessNumDisplay('?');
   guessNumber.style.width = '15rem';
-  scoreDisplay.textContent = scoreValue;
+  scoreDisplay(scoreValue);
   inputGuess.value = '';
 });
