@@ -6,7 +6,9 @@ const inputGuess = document.querySelector('.guess');
 const scoreDisplay = document.querySelector('.score');
 const body = document.querySelector('body');
 const againBtn = document.querySelector('.again');
+const highscoreDisplay = document.querySelector('.highscore');
 let scoreValue = 20;
+let highscore = 0;
 
 checkBtn.addEventListener('click', () => {
   const guess = Number(inputGuess.value);
@@ -18,6 +20,11 @@ checkBtn.addEventListener('click', () => {
     body.style.backgroundColor = '#60b347';
     guessNumber.textContent = secretNumber;
     guessNumber.style.width = '30rem';
+
+    if (scoreValue > highscore) {
+      highscore = scoreValue;
+      highscoreDisplay.textContent = highscore;
+    }
   } else if (guess > secretNumber) {
     inputGuess.value = '';
     if (scoreValue > 1) {
