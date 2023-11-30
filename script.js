@@ -1,4 +1,4 @@
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 const guessNumber = document.querySelector('.number');
 const checkBtn = document.querySelector('.check');
 const messageDisplay = document.querySelector('.message');
